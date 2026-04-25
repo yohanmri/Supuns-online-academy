@@ -19,7 +19,7 @@ const Navbar = () => {
         <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white font-bold text-lg shadow-inner">S</div>
         <SinhalaText 
           variant="h3" 
-          className="mb-0 text-base md:text-lg text-gray-100 font-normal tracking-wide"
+          className="mb-0 text-lg md:text-xl text-white font-bold tracking-wide"
         >
           {language === 'si' ? 'සුපුන් ඇකඩමි' : "Supun's Academy"}
         </SinhalaText>
@@ -31,7 +31,7 @@ const Navbar = () => {
             <Link 
               key={link.path} 
               to={link.path} 
-              className="text-gray-400 font-normal hover:text-white transition-all duration-300 text-xs md:text-sm tracking-wide"
+              className="text-white font-semibold hover:text-blue-400 transition-all duration-300 text-xs md:text-sm tracking-wide"
             >
               {language === 'si' ? link.si : link.en}
             </Link>

@@ -1,90 +1,247 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SinhalaText from '../components/typography/SinhalaText';
 import { useLanguage } from '../context/LanguageContext';
 import supunImg from '../assets/images/supun-hero.png';
+import teacher1Img from '../assets/images/teacher1.png';
+import teacher2Img from '../assets/images/teacher2.png';
+import teacher3Img from '../assets/images/teacher3.png';
+import teacher4Img from '../assets/images/teacher4.png';
 
-const TeacherCard = ({ name, credentials, image, grades, subjects }) => {
+const TeacherCard = ({ name, credentials, image, grades, subjects, color, hoverColor }) => {
   const { language } = useLanguage();
   return (
-    <div className="card-premium relative group">
-      {/* Ribbon Badge */}
-      <div className="absolute top-4 left-0 bg-orange text-white px-4 py-1 rounded-r-full z-10 font-bold shadow-lg">
-        {grades}
+    <div className="bg-white border border-gray-100 group overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col h-full relative max-w-[220px] mx-auto shadow-sm">
+      {/* Subject Banner */}
+      <div className={`py-1.5 px-2 flex justify-center items-center ${color}`}>
+        <div className="text-[14px] font-black uppercase tracking-wider text-white font-sinhala-head">
+          {subjects[0]}
+        </div>
       </div>
       
-      <div className="aspect-[4/5] overflow-hidden">
+      {/* Image Container */}
+      <div className="relative aspect-[4/5] bg-gray-100 overflow-hidden">
         <img 
           src={image} 
           alt={name} 
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
         />
+        {/* Overlay Badge */}
+        <div className="absolute top-2 left-2 bg-white/90 backdrop-blur-md px-2 py-0.5 rounded-sm shadow-sm">
+          <span className="text-[8px] font-bold uppercase tracking-wider text-gray-800">{grades}</span>
+        </div>
       </div>
       
-      <div className="p-6">
-        <div className="flex gap-2 mb-2">
-          {subjects.map((sub, i) => (
-            <span key={i} className="text-[10px] uppercase font-bold bg-navy/10 text-navy px-2 py-0.5 rounded">
-              {sub}
-            </span>
-          ))}
-        </div>
-        <SinhalaText variant="h3" className="mb-1">{name}</SinhalaText>
-        <div className="text-emerald font-bold text-sm mb-4">{credentials}</div>
-        
-        <button className="w-full py-2 border-2 border-navy text-navy font-bold rounded-lg hover:bg-navy hover:text-white transition-all">
-          {language === 'si' ? 'විස්තර බලන්න' : 'View Profile'}
-        </button>
+      {/* Content */}
+      <div className="p-3 flex flex-col flex-grow text-center">
+        <SinhalaText variant="h3" className={`text-lg font-bold text-gray-900 ${hoverColor} transition-colors leading-tight mb-0.5`}>
+          {name}
+        </SinhalaText>
+        <p className="text-[11px] text-gray-600 font-bold leading-tight mt-0">
+          {credentials}
+        </p>
       </div>
     </div>
   );
 };
 
+const FilterButton = ({ active, label, onClick }) => (
+  <button 
+    onClick={onClick}
+    className={`w-full text-left px-4 py-2 rounded-sm text-[11px] font-bold transition-all border-l-4 ${
+      active 
+        ? 'bg-blue-50 border-blue-600 text-blue-700' 
+        : 'border-transparent text-gray-500 hover:bg-gray-50 hover:text-gray-900'
+    }`}
+  >
+    {label}
+  </button>
+);
+
+const QualityBadge = ({ icon, title, desc }) => (
+  <div className="py-5 border-b border-gray-50 last:border-b-0 space-y-3 group transition-all">
+    <div className="text-4xl grayscale group-hover:grayscale-0 transition-all duration-500">{icon}</div>
+    <h5 className="text-lg font-black uppercase tracking-tight text-navy leading-tight">{title}</h5>
+    <p className="text-sm text-gray-500 leading-relaxed font-bold">{desc}</p>
+  </div>
+);
+
 const Teachers = () => {
   const { language } = useLanguage();
+  const [subjectFilter, setSubjectFilter] = useState('all');
+  const [gradeFilter, setGradeFilter] = useState('all');
 
   const teachers = [
     {
+      id: 'science',
       name: 'සුපුන් රත්නායක',
-      credentials: 'BSc (Hons) in Science, Dip in IT',
+      credentials: 'BSc (Hons) in Biological Science, Senior Science Consultant',
       image: supunImg,
-      grades: '10 - 11 ශ්‍රේණි',
-      subjects: ['Science', 'Theory']
+      grade_category: '10-11',
+      grades: 'GRADE 10 - 11',
+      subjects: ['විද්‍යාව'],
+      color: 'bg-blue-600',
+      hoverColor: 'group-hover:text-blue-600'
     },
-    // Adding placeholder teachers
     {
+      id: 'maths',
       name: 'කසුන් පෙරේරා',
-      credentials: 'BSc in Physics',
-      image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400',
-      grades: '11 ශ්‍රේණිය',
-      subjects: ['Physics']
+      credentials: 'BSc in Physical Science (University of Peradeniya)',
+      image: teacher1Img,
+      grade_category: '10-11',
+      grades: 'GRADE 10 - 11',
+      subjects: ['ගණිතය'],
+      color: 'bg-[#10b981]',
+      hoverColor: 'group-hover:text-[#10b981]'
     },
     {
+      id: 'english',
       name: 'නිමල් සිරිවර්ධන',
-      credentials: 'BSc in Chemistry',
-      image: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&q=80&w=400',
-      grades: '10 - 11 ශ්‍රේණි',
-      subjects: ['Chemistry']
+      credentials: 'MA in English Literature, Senior English Lecturer',
+      image: teacher2Img,
+      grade_category: 'all',
+      grades: 'ALL GRADES',
+      subjects: ['ඉංග්‍රීසි'],
+      color: 'bg-[#f6921e]',
+      hoverColor: 'group-hover:text-[#f6921e]'
+    },
+    {
+      id: 'sinhala',
+      name: 'ප්‍රසාද් මධුසංඛ',
+      credentials: 'BA in Sinhala (University of Kelaniya), Media Consultant',
+      image: teacher3Img,
+      grade_category: 'all',
+      grades: 'ALL GRADES',
+      subjects: ['සිංහල'],
+      color: 'bg-[#FFD700]',
+      hoverColor: 'group-hover:text-[#FFD700]'
+    },
+    {
+      id: 'commerce',
+      name: 'MJ කුමාර',
+      credentials: 'BCom (Special), Chartered Accountant (Finalist)',
+      image: teacher4Img,
+      grade_category: '10-11',
+      grades: 'GRADE 10 - 11',
+      subjects: ['වාණිජ්‍යය'],
+      color: 'bg-[#1b5e20]',
+      hoverColor: 'group-hover:text-[#1b5e20]'
     }
   ];
 
-  return (
-    <div className="bg-brandGrey min-h-screen py-16">
-      <div className="container mx-auto px-6 md:px-12 text-center mb-16">
-        <SinhalaText variant="h1">ගුරු මණ්ඩලය</SinhalaText>
-        <SinhalaText className="max-w-2xl mx-auto text-gray-600">
-          {language === 'si' 
-            ? 'දිවයිනේ ප්‍රවීණතම ගුරුවරුන් සමඟින් ඔබේ විභාග ජයග්‍රහණය තහවුරු කරගන්න.'
-            : 'Ensure your exam success with the most experienced teachers in the island.'}
-        </SinhalaText>
-      </div>
+  const filteredTeachers = teachers.filter(t => {
+    const matchSubject = subjectFilter === 'all' || t.id === subjectFilter;
+    const matchGrade = gradeFilter === 'all' || t.grade_category === gradeFilter || t.grade_category === 'all';
+    return matchSubject && matchGrade;
+  });
 
-      <div className="container mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {teachers.map((teacher, idx) => (
-            <TeacherCard key={idx} {...teacher} />
-          ))}
+  return (
+    <div className="bg-[#f8f9fa] min-h-screen">
+      {/* Header Section */}
+      <section 
+        className="relative py-1 md:py-2 overflow-hidden bg-navy shadow-2xl z-20 border-b border-white/10"
+        style={{
+          backgroundImage: 'url("https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=2000&blur=50")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      >
+        <div className="absolute inset-0 bg-navy/40 backdrop-blur-[2px]"></div>
+        <div className="container mx-auto px-6 md:px-12 relative z-10">
+          <div className="max-w-4xl text-left">
+            <div className="text-blue-400 font-black uppercase tracking-[0.3em] mb-0 text-[10px] md:text-xs drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+              {language === 'si' ? 'අපේ කණ්ඩායම' : 'Our Faculty'}
+            </div>
+            <SinhalaText variant="h1" className="text-xl md:text-3xl font-bold mb-0 leading-[0.85] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+              {language === 'si' ? 'දිවයිනේ ප්‍රවීණතම ගුරු මණ්ඩලය' : 'Meet Our World-Class Faculty'}
+            </SinhalaText>
+            <p className="text-[10px] md:text-xs text-gray-100 max-w-2xl leading-none mt-0.5 opacity-95 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+              {language === 'si' 
+                ? 'ඔබේ අනාගතය ගොඩනැගීම සඳහා විෂය ප්‍රවීණයන් සමඟ එක්වන්න.'
+                : 'Join subject experts to build your future and ensure exam success.'}
+            </p>
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* Main Content */}
+      <section className="py-8 bg-gradient-to-b from-gray-50 via-white to-gray-100 min-h-[70vh]">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex flex-col xl:flex-row gap-5">
+            
+            {/* Left Sidebar - Filter */}
+            <aside className="w-full xl:w-52 space-y-6 bg-white p-6 rounded-sm shadow-xl border border-gray-100 h-fit sticky top-24">
+              <div>
+                <SinhalaText variant="h3" className="text-[10px] font-black uppercase tracking-widest text-blue-600 mb-4 border-b border-blue-50 pb-2">
+                  {language === 'si' ? 'විෂය අනුව තෝරන්න' : 'Select by Subject'}
+                </SinhalaText>
+                <div className="space-y-1">
+                  <FilterButton active={subjectFilter === 'all'} label={language === 'si' ? 'සියලුම විෂයන්' : 'All Subjects'} onClick={() => setSubjectFilter('all')} />
+                  <FilterButton active={subjectFilter === 'science'} label={language === 'si' ? 'විද්‍යාව' : 'Science'} onClick={() => setSubjectFilter('science')} />
+                  <FilterButton active={subjectFilter === 'maths'} label={language === 'si' ? 'ගණිතය' : 'Mathematics'} onClick={() => setSubjectFilter('maths')} />
+                  <FilterButton active={subjectFilter === 'english'} label={language === 'si' ? 'ඉංග්‍රීසි' : 'English'} onClick={() => setSubjectFilter('english')} />
+                  <FilterButton active={subjectFilter === 'sinhala'} label={language === 'si' ? 'සිංහල' : 'Sinhala'} onClick={() => setSubjectFilter('sinhala')} />
+                  <FilterButton active={subjectFilter === 'commerce'} label={language === 'si' ? 'වාණිජ්‍යය' : 'Commerce'} onClick={() => setSubjectFilter('commerce')} />
+                </div>
+              </div>
+              <div>
+                <SinhalaText variant="h3" className="text-[10px] font-black uppercase tracking-widest text-blue-600 mb-4 border-b border-blue-50 pb-2">
+                  {language === 'si' ? 'ශ්‍රේණිය අනුව තෝරන්න' : 'Select by Grade'}
+                </SinhalaText>
+                <div className="space-y-1">
+                  <FilterButton active={gradeFilter === 'all'} label={language === 'si' ? 'සියලුම ශ්‍රේණි' : 'All Grades'} onClick={() => setGradeFilter('all')} />
+                  <FilterButton active={gradeFilter === '10-11'} label={language === 'si' ? '10 - 11 ශ්‍රේණි' : 'Grades 10 - 11'} onClick={() => setGradeFilter('10-11')} />
+                </div>
+              </div>
+            </aside>
+
+            {/* Middle Content - Teacher Grid */}
+            <div className="flex-grow">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {filteredTeachers.map((teacher, idx) => (
+                  <TeacherCard key={idx} {...teacher} />
+                ))}
+              </div>
+            </div>
+
+            {/* Right Sidebar - Wrapped in a single cohesive container */}
+            <aside className="w-full xl:w-80 h-fit sticky top-24">
+               <div className="bg-white p-8 rounded-sm shadow-2xl border border-gray-100 space-y-2">
+                 <SinhalaText variant="h3" className="text-sm font-black uppercase tracking-widest text-blue-600 mb-6 border-b border-blue-50 pb-3">
+                    {language === 'si' ? 'ප්‍රමිතිය සහ විශ්වාසය' : 'Quality & Trust'}
+                 </SinhalaText>
+                 <div className="space-y-2">
+                    <QualityBadge 
+                      icon="🎓" 
+                      title={language === 'si' ? 'විශ්වවිද්‍යාල කථිකාචාර්යවරුන්' : 'University Lecturers'} 
+                      desc={language === 'si' ? 'දිවයිනේ ප්‍රධාන විශ්වවිද්‍යාල වල ප්‍රවීණ ගුරුවරුන්ගෙන් ඉගෙන ගන්න.' : 'Learn from subject experts from major universities in the island.'}
+                    />
+                    <QualityBadge 
+                      icon="📜" 
+                      title={language === 'si' ? 'පිළිගත් උපාධිධාරීන්' : 'Certified Professionals'} 
+                      desc={language === 'si' ? 'සෑම ගුරුවරයෙකුම තම විෂය පිළිබඳ උසස්ම සුදුසුකම් සහිතය.' : 'Every teacher holds the highest qualifications in their respective subjects.'}
+                    />
+                    <QualityBadge 
+                      icon="✅" 
+                      title={language === 'si' ? '100% ප්‍රතිඵල සහතිකයි' : '100% Result Guaranteed'} 
+                      desc={language === 'si' ? 'වසර ගණනාවක අත්දැකීම් සමඟින් ඉහළම ප්‍රතිඵල ලබාදෙන එකම ආයතනය.' : 'The only institute providing top results with years of experience.'}
+                    />
+                 </div>
+               </div>
+            </aside>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Simplified CTA Section */}
+      <section className="py-8 bg-gray-900 text-white text-center">
+        <div className="container mx-auto px-6">
+          <SinhalaText variant="h2" className="text-xl md:text-2xl mb-4 leading-tight text-white drop-shadow-md font-bold">ඔබේ ගුරුවරයා තෝරාගන්න</SinhalaText>
+          <button className="bg-blue-600 text-white px-8 py-2.5 rounded-sm font-bold text-sm hover:bg-blue-500 transition-all shadow-xl">
+            {language === 'si' ? 'දැන්ම ලියාපදිංචි වන්න' : 'Register Now'}
+          </button>
+        </div>
+      </section>
     </div>
   );
 };
