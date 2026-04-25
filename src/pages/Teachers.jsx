@@ -10,10 +10,10 @@ import teacher4Img from '../assets/images/teacher4.png';
 const TeacherCard = ({ name, credentials, image, grades, subjects, color, hoverColor }) => {
   const { language } = useLanguage();
   return (
-    <div className="bg-white border border-gray-100 group overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col h-full relative max-w-[220px] mx-auto shadow-sm">
+    <div className="bg-white border border-gray-100 group overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col h-full relative max-w-[210px] mx-auto shadow-sm">
       {/* Subject Banner */}
       <div className={`py-1.5 px-2 flex justify-center items-center ${color}`}>
-        <div className="text-[14px] font-black uppercase tracking-wider text-white font-sinhala-head">
+        <div className="text-[13px] font-black uppercase tracking-wider text-white font-sinhala-head">
           {subjects[0]}
         </div>
       </div>
@@ -32,11 +32,11 @@ const TeacherCard = ({ name, credentials, image, grades, subjects, color, hoverC
       </div>
       
       {/* Content */}
-      <div className="p-3 flex flex-col flex-grow text-center">
-        <SinhalaText variant="h3" className={`text-lg font-bold text-gray-900 ${hoverColor} transition-colors leading-tight mb-0.5`}>
+      <div className="p-2.5 flex flex-col flex-grow text-center">
+        <SinhalaText variant="h3" className={`text-[16px] font-bold text-gray-900 ${hoverColor} transition-colors leading-tight mb-0.5`}>
           {name}
         </SinhalaText>
-        <p className="text-[11px] text-gray-600 font-bold leading-tight mt-0">
+        <p className="text-[10px] text-gray-600 font-bold leading-tight mt-0 line-clamp-2">
           {credentials}
         </p>
       </div>
@@ -58,10 +58,10 @@ const FilterButton = ({ active, label, onClick }) => (
 );
 
 const QualityBadge = ({ icon, title, desc }) => (
-  <div className="py-5 border-b border-gray-50 last:border-b-0 space-y-3 group transition-all">
-    <div className="text-4xl grayscale group-hover:grayscale-0 transition-all duration-500">{icon}</div>
-    <h5 className="text-lg font-black uppercase tracking-tight text-navy leading-tight">{title}</h5>
-    <p className="text-sm text-gray-500 leading-relaxed font-bold">{desc}</p>
+  <div className="py-4 border-b border-gray-50 last:border-b-0 space-y-2 group transition-all">
+    <div className="text-3xl grayscale group-hover:grayscale-0 transition-all duration-500">{icon}</div>
+    <h5 className="text-base font-black uppercase tracking-tight text-navy leading-tight">{title}</h5>
+    <p className="text-xs text-gray-500 leading-relaxed font-bold">{desc}</p>
   </div>
 );
 
@@ -138,7 +138,7 @@ const Teachers = () => {
     <div className="bg-[#f8f9fa] min-h-screen">
       {/* Header Section */}
       <section 
-        className="relative py-1 md:py-2 overflow-hidden bg-navy shadow-2xl z-20 border-b border-white/10"
+        className="relative overflow-hidden bg-navy shadow-2xl z-20 border-b border-white/10"
         style={{
           backgroundImage: 'url("https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=2000&blur=50")',
           backgroundSize: 'cover',
@@ -146,15 +146,15 @@ const Teachers = () => {
         }}
       >
         <div className="absolute inset-0 bg-navy/40 backdrop-blur-[2px]"></div>
-        <div className="container mx-auto px-6 md:px-12 relative z-10">
+        <div className="container mx-auto px-6 md:px-12 relative z-10 py-3 md:py-4">
           <div className="max-w-4xl text-left">
-            <div className="text-blue-400 font-black uppercase tracking-[0.3em] mb-0 text-[10px] md:text-xs drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+            <span style={{ marginBottom: '6px' }} className="text-blue-400 font-black uppercase tracking-[0.3em] text-[9px] md:text-[10px] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] block leading-none">
               {language === 'si' ? 'අපේ කණ්ඩායම' : 'Our Faculty'}
-            </div>
-            <SinhalaText variant="h1" className="text-xl md:text-3xl font-bold mb-0 leading-[0.85] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+            </span>
+            <h1 style={{ fontFamily: "'Gemunu Libre', sans-serif", lineHeight: '1', margin: 0, marginBottom: '20px', padding: 0 }} className="text-3xl md:text-5xl font-bold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
               {language === 'si' ? 'දිවයිනේ ප්‍රවීණතම ගුරු මණ්ඩලය' : 'Meet Our World-Class Faculty'}
-            </SinhalaText>
-            <p className="text-[10px] md:text-xs text-gray-100 max-w-2xl leading-none mt-0.5 opacity-95 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+            </h1>
+            <p style={{ margin: 0, padding: 0 }} className="text-[10px] md:text-xs text-gray-200 max-w-2xl leading-none opacity-95 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
               {language === 'si' 
                 ? 'ඔබේ අනාගතය ගොඩනැගීම සඳහා විෂය ප්‍රවීණයන් සමඟ එක්වන්න.'
                 : 'Join subject experts to build your future and ensure exam success.'}
@@ -163,13 +163,13 @@ const Teachers = () => {
         </div>
       </section>
 
-      {/* Main Content */}
+      {/* Main Content - Wider Container for 4-Card Grid */}
       <section className="py-8 bg-gradient-to-b from-gray-50 via-white to-gray-100 min-h-[70vh]">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-col xl:flex-row gap-5">
+        <div className="container-fluid mx-auto px-4 md:px-8 max-w-[1600px]">
+          <div className="flex flex-col xl:flex-row gap-4">
             
-            {/* Left Sidebar - Filter */}
-            <aside className="w-full xl:w-52 space-y-6 bg-white p-6 rounded-sm shadow-xl border border-gray-100 h-fit sticky top-24">
+            {/* Left Sidebar - Narrower Filter */}
+            <aside className="w-full xl:w-48 space-y-6 bg-white p-5 rounded-sm shadow-xl border border-gray-100 h-fit sticky top-24">
               <div>
                 <SinhalaText variant="h3" className="text-[10px] font-black uppercase tracking-widest text-blue-600 mb-4 border-b border-blue-50 pb-2">
                   {language === 'si' ? 'විෂය අනුව තෝරන්න' : 'Select by Subject'}
@@ -194,22 +194,22 @@ const Teachers = () => {
               </div>
             </aside>
 
-            {/* Middle Content - Teacher Grid */}
+            {/* Middle Content - 4 Teachers per row */}
             <div className="flex-grow">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {filteredTeachers.map((teacher, idx) => (
                   <TeacherCard key={idx} {...teacher} />
                 ))}
               </div>
             </div>
 
-            {/* Right Sidebar - Wrapped in a single cohesive container */}
-            <aside className="w-full xl:w-80 h-fit sticky top-24">
-               <div className="bg-white p-8 rounded-sm shadow-2xl border border-gray-100 space-y-2">
-                 <SinhalaText variant="h3" className="text-sm font-black uppercase tracking-widest text-blue-600 mb-6 border-b border-blue-50 pb-3">
+            {/* Right Sidebar - Narrower Quality Panel */}
+            <aside className="w-full xl:w-72 h-fit sticky top-24">
+               <div className="bg-white p-6 rounded-sm shadow-2xl border border-gray-100">
+                 <SinhalaText variant="h3" className="text-[12px] font-black uppercase tracking-widest text-blue-600 mb-4 border-b border-blue-50 pb-3">
                     {language === 'si' ? 'ප්‍රමිතිය සහ විශ්වාසය' : 'Quality & Trust'}
                  </SinhalaText>
-                 <div className="space-y-2">
+                 <div className="space-y-1">
                     <QualityBadge 
                       icon="🎓" 
                       title={language === 'si' ? 'විශ්වවිද්‍යාල කථිකාචාර්යවරුන්' : 'University Lecturers'} 
