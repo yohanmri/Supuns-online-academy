@@ -4,6 +4,8 @@ import { LanguageProvider } from './context/LanguageContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
+import WhatsAppFAB from './components/ui/WhatsAppFAB';
 import Home from './pages/Home';
 import About from './pages/About';
 import Teachers from './pages/Teachers';
@@ -30,9 +32,8 @@ function App() {
                   <Route path="/contact" element={<Contact />} />
                 </Routes>
               </main>
-              <footer className="footer">
-                <p>&copy; 2026 Supun's Online Academy. All Rights Reserved.</p>
-              </footer>
+              <Footer />
+              <WhatsAppFAB />
             </div>
           </Router>
         </LanguageProvider>

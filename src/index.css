@@ -1,130 +1,64 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Serif+Sinhala:wght@400;700&display=swap');
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Gemunu+Libre:wght@400;700&family=Inter:wght@300;400;600;700&family=Noto+Sans+Sinhala:wght@400;700&family=Noto+Serif+Sinhala:wght@400;700&display=swap');
 
-:root {
-  --navy: #001F3F;
-  --navy-light: #003366;
-  --green: #2ECC40;
-  --green-dark: #27ae60;
-  --white: #ffffff;
-  --gray-light: #f4f7f6;
-  --text-dark: #1a1a1a;
-  --text-muted: #666666;
-  --transition: all 0.3s ease;
-}
+@theme {
+  --color-navy: #1A237E;
+  --color-navy-light: #3949AB;
+  --color-emerald: #2E7D32;
+  --color-emerald-light: #4ADE80;
+  --color-emerald-dark: #1B5E20;
+  --color-orange: #FF6D00;
+  --color-orange-dark: #E65100;
+  --color-brand-grey: #F5F5F5;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  --font-sinhala-head: "Gemunu Libre", "Noto Serif Sinhala", serif;
+  --font-sinhala-body: "Noto Sans Sinhala", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  
+  --animate-marquee: marquee 25s linear infinite;
 
-body {
-  font-family: 'Inter', 'Noto Serif Sinhala', sans-serif;
-  background-color: var(--gray-light);
-  color: var(--text-dark);
-  line-height: 1.6;
-}
-
-.app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.navbar {
-  background-color: var(--navy);
-  padding: 1rem 5%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-
-.navbar .logo {
-  color: var(--white);
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-.nav-links {
-  display: flex;
-  gap: 2rem;
-}
-
-.nav-links a {
-  color: var(--white);
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 0.95rem;
-  transition: var(--transition);
-  opacity: 0.8;
-}
-
-.nav-links a:hover {
-  opacity: 1;
-  color: var(--green);
-}
-
-.lang-toggle {
-  background-color: var(--green);
-  color: var(--white);
-  border: none;
-  padding: 0.5rem 1.2rem;
-  border-radius: 50px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: var(--transition);
-}
-
-.lang-toggle:hover {
-  background-color: var(--green-dark);
-  transform: translateY(-2px);
-}
-
-.content {
-  flex: 1;
-  padding: 4rem 5%;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-.page-container {
-  background: white;
-  padding: 3rem;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-  animation: fadeIn 0.8s ease-out;
-}
-
-h1 {
-  font-size: 2.5rem;
-  color: var(--navy);
-  margin-bottom: 1.5rem;
-  border-left: 5px solid var(--green);
-  padding-left: 1rem;
-}
-
-.footer {
-  background-color: var(--navy);
-  color: var(--white);
-  text-align: center;
-  padding: 2rem;
-  margin-top: auto;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .nav-links {
-    display: none; /* Add a hamburger menu in real implementation */
+  @keyframes marquee {
+    from { transform: translateX(0%); }
+    to { transform: translateX(-100%); }
   }
+}
+
+@layer base {
+  body {
+    @apply bg-white text-[#1a1a1a] font-sinhala-body antialiased;
+    font-size: 18px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sinhala-head font-bold text-navy;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 rounded-lg font-bold text-white transition-all duration-300 transform hover:-translate-y-1 shadow-lg cursor-pointer;
+    background: linear-gradient(135deg, #1A237E 0%, #3949AB 100%);
+  }
+
+  .glass-nav {
+    @apply sticky top-0 z-50 bg-white/70 backdrop-blur-md border-b border-white/20;
+  }
+
+  .card-premium {
+    @apply bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl border border-gray-100;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #1A237E;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3949AB;
 }
