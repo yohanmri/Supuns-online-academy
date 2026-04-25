@@ -47,7 +47,7 @@ const TeacherCard = ({ name, credentials, image, grades, subjects, color, hoverC
 const FilterButton = ({ active, label, onClick }) => (
   <button 
     onClick={onClick}
-    className={`w-full text-left px-4 py-2 rounded-sm text-[11px] font-bold transition-all border-l-4 ${
+    className={`w-full text-left px-4 py-2.5 rounded-sm text-[13px] font-bold transition-all border-l-4 ${
       active 
         ? 'bg-blue-50 border-blue-600 text-blue-700' 
         : 'border-transparent text-gray-500 hover:bg-gray-50 hover:text-gray-900'
@@ -171,8 +171,8 @@ const Teachers = () => {
             {/* Left Sidebar - Narrower Filter */}
             <aside className="w-full xl:w-48 space-y-6 bg-white p-5 rounded-sm shadow-xl border border-gray-100 h-fit sticky top-24">
               <div>
-                <SinhalaText variant="h3" className="text-[10px] font-black uppercase tracking-widest text-blue-600 mb-4 border-b border-blue-50 pb-2">
-                  {language === 'si' ? 'විෂය අනුව තෝරන්න' : 'Select by Subject'}
+                <SinhalaText variant="h3" className="text-[13px] font-black uppercase tracking-widest text-blue-600 mb-4 border-b border-blue-50 pb-2">
+                  {language === 'si' ? 'විෂය' : 'Subject'}
                 </SinhalaText>
                 <div className="space-y-1">
                   <FilterButton active={subjectFilter === 'all'} label={language === 'si' ? 'සියලුම විෂයන්' : 'All Subjects'} onClick={() => setSubjectFilter('all')} />
@@ -184,8 +184,8 @@ const Teachers = () => {
                 </div>
               </div>
               <div>
-                <SinhalaText variant="h3" className="text-[10px] font-black uppercase tracking-widest text-blue-600 mb-4 border-b border-blue-50 pb-2">
-                  {language === 'si' ? 'ශ්‍රේණිය අනුව තෝරන්න' : 'Select by Grade'}
+                <SinhalaText variant="h3" className="text-[13px] font-black uppercase tracking-widest text-blue-600 mb-4 border-b border-blue-50 pb-2">
+                  {language === 'si' ? 'ශ්‍රේණිය' : 'Grade'}
                 </SinhalaText>
                 <div className="space-y-1">
                   <FilterButton active={gradeFilter === 'all'} label={language === 'si' ? 'සියලුම ශ්‍රේණි' : 'All Grades'} onClick={() => setGradeFilter('all')} />
