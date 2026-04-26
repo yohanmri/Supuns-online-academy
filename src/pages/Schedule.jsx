@@ -35,6 +35,14 @@ const ClassCard = ({ teacherId, type, time, subject, language }) => {
           <div className="text-[16px] font-black text-navy font-sinhala-head">{time}</div>
         </div>
         
+        <Link 
+          to={`/teachers/${teacher.id}`}
+          className="bg-orange-500 text-white px-4 py-2.5 rounded-sm text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:bg-orange-600 transition-all shadow-md"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          {language === 'si' ? 'කාලසටහන' : 'Time Table'}
+        </Link>
+
         <button 
           onClick={() => navigate(`/class-entry/${teacher.id}`)}
           className="bg-navy text-white px-4 py-2.5 rounded-sm text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:bg-blue-600 transition-all shadow-md group/btn"
@@ -170,14 +178,14 @@ const Schedule = () => {
     <div className="bg-[#f8f9fa] min-h-screen pb-20">
       {/* Compact Cinematic Header */}
       <section 
-        className="bg-navy py-10 md:py-14 relative overflow-hidden"
+        className="bg-navy py-6 md:py-8 relative overflow-hidden"
         style={{
           backgroundImage: 'url("https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=2000")',
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
       >
-        <div className="absolute inset-0 bg-navy opacity-80 backdrop-blur-[2px]"></div>
+        <div className="absolute inset-0 bg-navy opacity-60 backdrop-blur-[1px]"></div>
         <div className="container mx-auto px-6 md:px-12 relative z-10 text-left">
           <span className="text-blue-400 font-black uppercase tracking-[0.4em] text-[10px] md:text-[11px] block mb-2 leading-none">
             {language === 'si' ? 'කාලසටහන' : 'Academic Schedule'}

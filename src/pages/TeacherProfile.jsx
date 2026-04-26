@@ -108,14 +108,22 @@ const TeacherProfile = () => {
         <div className={`absolute inset-0 opacity-20 ${teacher.color}`}></div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/20"></div>
         
-        {/* Back Button */}
-        <div className="absolute top-8 left-6 md:left-12 z-20">
+        {/* Header Navigation Buttons */}
+        <div className="absolute top-8 left-0 right-0 px-6 md:px-12 flex justify-between items-center z-20">
           <Link 
             to="/teachers" 
             className="flex items-center gap-2 text-white/80 hover:text-white transition-all group bg-white/10 backdrop-blur-md px-4 py-2 rounded-sm border border-white/20 shadow-xl"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform group-hover:-translate-x-1"><path d="m15 18-6-6 6-6"/></svg>
             <span className="text-xs font-black uppercase tracking-widest">{language === 'si' ? 'ආපසු' : 'Back'}</span>
+          </Link>
+
+          <Link 
+            to="/schedule" 
+            className="flex items-center gap-2 text-white/80 hover:text-white transition-all group bg-white/10 backdrop-blur-md px-4 py-2 rounded-sm border border-white/20 shadow-xl"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform group-hover:translate-x-1"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+            <span className="text-xs font-black uppercase tracking-widest">{language === 'si' ? 'කාලසටහන' : 'Schedule'}</span>
           </Link>
         </div>
         
