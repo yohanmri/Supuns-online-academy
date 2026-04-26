@@ -133,6 +133,25 @@ const Teachers = () => {
                     <CheckboxFilter key={g} active={selectedGrades.includes(g)} label={`${g} ${language === 'si' ? 'ශ්‍රේණිය' : 'Grade'}`} onClick={() => toggleGrade(g)} />
                   ))}
                 </AccordionGroup>
+                
+                {/* Learning Mode (Prototype) */}
+                <div className="border-t border-gray-100 pt-4 mt-4">
+                  <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest block mb-3">{language === 'si' ? 'ඉගෙනුම් ක්‍රමය' : 'LEARNING MODE'}</span>
+                  <div className="space-y-2">
+                    {['Online', 'Onsite'].map(mode => (
+                      <label key={mode} className="flex items-center gap-3 group cursor-pointer">
+                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
+                          mode === 'Online' ? 'border-blue-600 bg-blue-50' : 'border-gray-200 group-hover:border-blue-400'
+                        }`}>
+                          {mode === 'Online' && <div className="w-2.5 h-2.5 bg-blue-600 rounded-full"></div>}
+                        </div>
+                        <span className={`text-[14px] font-bold transition-colors ${
+                          mode === 'Online' ? 'text-blue-600' : 'text-gray-500 group-hover:text-blue-600'
+                        }`}>{mode}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
               </div>
             </aside>
 

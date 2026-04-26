@@ -13,6 +13,8 @@ import TeacherProfile from './pages/TeacherProfile';
 import Schedule from './pages/Schedule';
 import Dashboard from './pages/Dashboard';
 import Contact from './pages/Contact';
+import ClassEntry from './pages/ClassEntry';
+import Register from './pages/Register';
 import './index.css';
 
 function App() {
@@ -32,6 +34,8 @@ function App() {
                   <Route path="/schedule" element={<Schedule />} />
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/contact" element={<Contact />} />
+                  <Route path="/class-entry/:id" element={<ClassEntry />} />
+                  <Route path="/register" element={<Register />} />
                 </Routes>
               </main>
               <Footer />

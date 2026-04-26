@@ -1,44 +1,50 @@
 import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SinhalaText from '../components/typography/SinhalaText';
 import { useLanguage } from '../context/LanguageContext';
 import { teachers } from '../data/teacherData';
 
 const ClassCard = ({ teacherId, type, time, subject, language }) => {
   const teacher = teachers.find(t => t.id === teacherId) || teachers[0];
+  const navigate = useNavigate();
   
   return (
-    <Link 
-      to={`/teachers/${teacher.id}`}
-      className="bg-white border border-gray-100 p-4 rounded-sm shadow-sm hover:shadow-xl hover:border-blue-200 hover:-translate-y-0.5 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 group cursor-pointer relative overflow-hidden"
-    >
+    <div className="bg-white border border-gray-100 p-4 rounded-sm shadow-sm hover:shadow-xl hover:border-blue-200 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4 group relative overflow-hidden">
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-transparent group-hover:bg-blue-600 transition-all"></div>
       
-      <div className="flex items-center gap-4">
-        <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-gray-50 shadow-inner group-hover:scale-105 transition-transform shrink-0">
+      <div className="flex items-center gap-4 flex-1">
+        <Link to={`/teachers/${teacher.id}`} className="w-14 h-14 rounded-full overflow-hidden border-2 border-gray-50 shadow-inner group-hover:scale-105 transition-transform shrink-0">
           <img src={teacher.image} alt={teacher.name} className="w-full h-full object-cover object-top" />
-        </div>
+        </Link>
         <div>
           <div className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-500 mb-0.5 flex items-center gap-2">
             {subject}
             <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
             <span className={type === 'Paper' ? 'text-orange-500' : 'text-blue-500'}>{type}</span>
           </div>
-          <div className="text-[17px] md:text-[19px] font-bold text-navy group-hover:text-blue-600 transition-colors leading-tight">{teacher.name}</div>
-          <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1 opacity-70">Click to view profile & timetable</div>
+          <Link to={`/teachers/${teacher.id}`} className="text-[17px] md:text-[19px] font-bold text-navy hover:text-blue-600 transition-colors leading-tight block">
+            {teacher.name}
+          </Link>
+          <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1 opacity-70">Expert Tutor</div>
         </div>
       </div>
 
-      <div className="flex items-center gap-6">
-        <div className="bg-gray-50/80 px-5 py-2 rounded-sm text-center md:text-right border border-gray-100 group-hover:bg-blue-50 transition-colors">
-          <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">{language === 'si' ? 'වේලාව' : 'Time'}</div>
-          <div className="text-[17px] font-black text-navy font-sinhala-head">{time}</div>
+      <div className="flex flex-wrap items-center gap-4">
+        <div className="bg-gray-50/80 px-4 py-2 rounded-sm text-center border border-gray-100 min-w-[120px]">
+          <div className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-0.5">{language === 'si' ? 'වේලාව' : 'Time'}</div>
+          <div className="text-[16px] font-black text-navy font-sinhala-head">{time}</div>
         </div>
-        <div className="hidden md:block text-gray-300 group-hover:text-blue-600 transition-colors transform group-hover:translate-x-1">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-        </div>
+        
+        <button 
+          onClick={() => navigate(`/class-entry/${teacher.id}`)}
+          className="bg-navy text-white px-4 py-2.5 rounded-sm text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:bg-blue-600 transition-all shadow-md group/btn"
+        >
+          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+          {language === 'si' ? 'පන්තියට පිවිසෙන්න' : 'Join Online'}
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="group-hover/btn:translate-x-0.5 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
       </div>
-    </Link>
+    </div>
   );
 };
 
@@ -52,7 +58,7 @@ const Schedule = () => {
   const categories = [
     { id: 'primary', si: 'ප්‍රාථමික', en: 'Primary', grades: ['Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5'] },
     { id: 'secondary', si: 'ද්විතීයික', en: 'Secondary', grades: ['Grade 6', 'Grade 7', 'Grade 8', 'Grade 9'] },
-    { id: 'ol', si: 'සාමාන්්‍ය පෙළ', en: 'O/Level', grades: ['Grade 10', 'Grade 11'] },
+    { id: 'ol', si: 'සාමාන්‍ය පෙළ', en: 'O/Level', grades: ['Grade 10', 'Grade 11'] },
     { id: 'al', si: 'උසස් පෙළ', en: 'A/Level', grades: ['Grade 12', 'Grade 13'] }
   ];
 
@@ -186,35 +192,41 @@ const Schedule = () => {
       <div className="sticky top-[56px] z-50 bg-white shadow-2xl border-b border-gray-100">
         <div className="container mx-auto px-6 md:px-12">
           {/* Category Selector */}
-          <div className="flex overflow-x-auto no-scrollbar py-4 gap-8 md:gap-12 border-b border-gray-50">
-            {categories.map(cat => (
-              <button
-                key={cat.id}
-                onClick={() => {
-                   setActiveCategory(cat.id);
-                   setActiveGrade(cat.grades[0]);
-                   setActiveStream('all');
-                   setActiveSubject('all');
-                }}
-                className={`text-[12px] md:text-[14px] font-black uppercase tracking-[0.2em] whitespace-nowrap transition-all relative pb-2 ${
-                  activeCategory === cat.id ? 'text-blue-600' : 'text-gray-400 hover:text-gray-600'
-                }`}
-              >
-                {language === 'si' ? cat.si : cat.en}
-                {activeCategory === cat.id && <div className="absolute bottom-0 left-0 w-full h-1 bg-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.5)]"></div>}
-              </button>
-            ))}
+          <div className="flex overflow-x-auto no-scrollbar py-4 gap-8 md:gap-12 border-b border-gray-50 items-center justify-between">
+            <div className="flex gap-8 md:gap-12">
+              {categories.map(cat => (
+                <button
+                  key={cat.id}
+                  onClick={() => {
+                    setActiveCategory(cat.id);
+                    setActiveGrade(cat.grades[0]);
+                    setActiveStream('all');
+                    setActiveSubject('all');
+                  }}
+                  className={`text-[12px] md:text-[14px] font-black uppercase tracking-[0.2em] whitespace-nowrap transition-all relative pb-2 ${activeCategory === cat.id ? 'text-blue-600' : 'text-gray-400 hover:text-gray-600'
+                    }`}
+                >
+                  {language === 'si' ? cat.si : cat.en}
+                  {activeCategory === cat.id && <div className="absolute bottom-0 left-0 w-full h-1 bg-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.5)]"></div>}
+                </button>
+              ))}
+            </div>
+
+            {/* Prototype Online/Onsite Toggle */}
+            <div className="hidden md:flex bg-gray-100 p-1 rounded-sm border border-gray-200">
+               <button className="px-4 py-1.5 text-[10px] font-black uppercase tracking-widest bg-white text-navy shadow-sm rounded-sm">Online</button>
+               <button className="px-4 py-1.5 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-navy transition-colors">Onsite</button>
+            </div>
           </div>
           {/* Grade Strip & Filters */}
           <div className="flex flex-col lg:flex-row lg:items-center justify-between py-4 gap-6">
-            <div className="flex overflow-x-auto no-scrollbar gap-2 shrink-0 pb-1 lg:pb-0">
+            <div className="flex overflow-x-auto no-scrollbar gap-2 shrink-0 pb-1 lg:pb-0 items-center">
               {categories.find(c => c.id === activeCategory)?.grades.map(grade => (
                 <button
                   key={grade}
                   onClick={() => setActiveGrade(grade)}
-                  className={`px-6 py-2 rounded-sm text-[11px] md:text-[13px] font-bold uppercase tracking-widest transition-all border shrink-0 ${
-                    activeGrade === grade ? 'bg-navy border-navy text-white shadow-xl scale-105' : 'bg-white border-gray-200 text-gray-500 hover:border-blue-300 hover:text-blue-600'
-                  }`}
+                  className={`px-6 py-2.5 rounded-sm text-[11px] md:text-[13px] font-bold uppercase tracking-widest transition-all border shrink-0 flex items-center justify-center min-w-[120px] ${activeGrade === grade ? 'bg-navy border-navy text-white shadow-xl translate-y-[-1px]' : 'bg-white border-gray-200 text-gray-500 hover:border-blue-300 hover:text-blue-600'
+                    }`}
                 >
                   {grade}
                 </button>
