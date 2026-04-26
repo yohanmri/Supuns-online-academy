@@ -34,6 +34,24 @@
   }
 }
 
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #cbd5e1;
+}
+
 @layer components {
   .btn-primary {
     @apply px-6 py-3 rounded-lg font-bold text-white transition-all duration-300 transform hover:-translate-y-1 shadow-lg cursor-pointer;
