@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SinhalaText from '../components/typography/SinhalaText';
 import heroImg from '../assets/images/supun-hero.png';
 import teacher1Img from '../assets/images/teacher1.png';
@@ -32,8 +32,8 @@ const slides = [
     label_en: 'Maths',
     title_si: ['ගණිතය', 'හරි ලේසියි'],
     title_en: ['Maths', 'Made Easy'],
-    subtitle_si: 'GRADE 10-11 | කසුන් පෙරේරා',
-    subtitle_en: 'GRADE 10-11 | KASUN PERERA',
+    subtitle_si: 'GRADE 10-11 | නිල්මිණි පෙරේරා',
+    subtitle_en: 'GRADE 10-11 | NILMINI PERERA',
     bg: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=2000&blur=50',
     teacherImg: teacher1Img,
     teacherScale: 'scale-115',
@@ -62,8 +62,8 @@ const slides = [
     label_en: 'Sinhala',
     title_si: ['අපේ සිංහල', 'භාෂාව'],
     title_en: ['Our', 'Language'],
-    subtitle_si: 'ALL GRADES | සුපුන් රත්නායක',
-    subtitle_en: 'ALL GRADES | SUPUN RATHNAYAKA',
+    subtitle_si: 'ALL GRADES | ප්‍රසාදිනී මධුසංඛ',
+    subtitle_en: 'ALL GRADES | PRASADINI MADUSANKA',
     bg: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=2000&blur=50',
     teacherImg: teacher3Img,
     teacherScale: 'scale-115',
@@ -77,8 +77,8 @@ const slides = [
     label_en: 'Commerce',
     title_si: ['වාණිජ්‍ය', 'ලෝකය'],
     title_en: ['Business', 'World'],
-    subtitle_si: 'GRADE 10-11 | MJ',
-    subtitle_en: 'GRADE 10-11 | MJ',
+    subtitle_si: 'GRADE 10-11 | ප්‍රසාද් කුමාර',
+    subtitle_en: 'GRADE 10-11 | PRASAD KUMARA',
     bg: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2000&blur=50',
     teacherImg: teacher4Img,
     teacherScale: 'scale-115',
@@ -91,7 +91,38 @@ const slides = [
 
 const HeroCarousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [progress, setProgress] = useState(0);
   const { language } = useLanguage();
+
+  const DURATION = 4000;
+  const INTERVAL = 50;
+
+  useEffect(() => {
+    let timer;
+    if (isPlaying) {
+      timer = setInterval(() => {
+        setProgress((prev) => prev + (INTERVAL / DURATION) * 100);
+      }, INTERVAL);
+    }
+    return () => clearInterval(timer);
+  }, [isPlaying]);
+
+  useEffect(() => {
+    if (progress >= 100) {
+      setProgress(0);
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }
+  }, [progress]);
+
+  const handleTabClick = (index) => {
+    setCurrentSlide(index);
+    setProgress(0);
+  };
+
+  const togglePlay = () => {
+    setIsPlaying(!isPlaying);
+  };
 
   const activeTitle = language === 'si' ? slides[currentSlide].title_si : slides[currentSlide].title_en;
 
@@ -114,17 +145,58 @@ const HeroCarousel = () => {
 
       {/* Tabs Container */}
       <div className="absolute top-0 left-0 w-full z-50 bg-black/40 backdrop-blur-md border-b border-white/10">
-        <div className="container mx-auto px-6 md:px-12 flex justify-center md:justify-start gap-8 md:gap-16">
-          {slides.map((slide, index) => (
-            <button
-              key={slide.id}
-              onClick={() => setCurrentSlide(index)}
-              className={`py-4 text-[10px] md:text-xs font-bold uppercase tracking-widest transition-all relative ${index === currentSlide ? 'text-white border-b-4 border-blue-500' : 'text-gray-400 hover:text-white'
-                }`}
-            >
-              {language === 'si' ? slide.label_si : slide.label_en}
-            </button>
-          ))}
+        <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
+          <div className="flex justify-center md:justify-start gap-8 md:gap-16">
+            {slides.map((slide, index) => (
+              <button
+                key={slide.id}
+                onClick={() => handleTabClick(index)}
+                className={`py-4 text-[10px] md:text-xs font-bold uppercase tracking-widest transition-all relative ${index === currentSlide ? 'text-white border-b-4 border-blue-500' : 'text-gray-400 hover:text-white'
+                  }`}
+              >
+                {language === 'si' ? slide.label_si : slide.label_en}
+              </button>
+            ))}
+          </div>
+
+          {/* Controls */}
+          <div className="flex items-center gap-4 py-4 pr-2">
+            <div className="relative w-8 h-8 flex items-center justify-center">
+              <svg className="w-full h-full -rotate-90">
+                <circle
+                  cx="16"
+                  cy="16"
+                  r="14"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  className="text-white/20"
+                />
+                <circle
+                  cx="16"
+                  cy="16"
+                  r="14"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeDasharray="88"
+                  strokeDashoffset={88 - (88 * progress) / 100}
+                  className="text-blue-500 transition-all duration-100 ease-linear"
+                />
+              </svg>
+              <button
+                onClick={togglePlay}
+                className="absolute inset-0 flex items-center justify-center text-white hover:text-blue-400 transition-colors"
+                aria-label={isPlaying ? "Pause" : "Play"}
+              >
+                {isPlaying ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" /><rect x="14" y="4" width="4" height="16" /></svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                )}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
