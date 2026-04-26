@@ -15,6 +15,7 @@ import Dashboard from './pages/Dashboard';
 import Contact from './pages/Contact';
 import ClassEntry from './pages/ClassEntry';
 import Register from './pages/Register';
+import ScrollToTop from './components/utils/ScrollToTop';
 import './index.css';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
       <ThemeProvider>
         <LanguageProvider>
           <Router>
+            <ScrollToTop />
             <div className="app">
               <Navbar />
               <main className="content">

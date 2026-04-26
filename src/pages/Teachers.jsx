@@ -17,7 +17,7 @@ const CheckIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
 );
 
-const TeacherCard = ({ id, name, credentials, image, grades, subjects, color, hoverColor }) => {
+export const TeacherCard = ({ id, name, credentials, image, grades, subjects, color, hoverColor }) => {
   const { language } = useLanguage();
   return (
     <Link to={`/teachers/${id}`} className="block">
@@ -100,6 +100,8 @@ const Teachers = () => {
           <p style={{ margin: 0, padding: 0 }} className="text-[13px] md:text-sm text-gray-200 max-w-2xl leading-snug opacity-95 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">{language === 'si' ? 'ඔබේ අනාගතය ගොඩනැගීම සඳහා විෂය ප්‍රවීණයන් සමඟ එක්වන්න.' : 'Join subject experts to build your future and ensure exam success.'}</p>
         </div>
       </section>
+
+
 
       <section className="py-8 bg-gradient-to-b from-gray-50 via-white to-gray-100 min-h-[70vh]">
         <div className="container-fluid mx-auto px-4 md:px-8 max-w-[1600px]">

@@ -40,10 +40,10 @@ const About = () => {
           backgroundPosition: 'center'
         }}
       >
-        <div className="absolute inset-0 bg-navy/80 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 bg-navy/40 backdrop-blur-[2px]"></div>
         <div className="container mx-auto px-6 md:px-12 relative z-10">
           <div className="max-w-4xl">
-            <div className="text-blue-400 font-black uppercase tracking-[0.3em] mb-4 text-sm">
+            <div className="inline-block border border-white/30 bg-black/20 shadow-lg px-4 py-1.5 rounded-sm text-blue-400 font-black uppercase tracking-[0.3em] mb-6 text-sm md:text-base">
               {language === 'si' ? 'අප ගැන' : 'About Us'}
             </div>
             <SinhalaText variant="h1" className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-white">
@@ -120,10 +120,12 @@ const About = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-gray-900 text-white text-center">
-        <div className="container mx-auto px-6">
-          <SinhalaText variant="h2" className="text-3xl md:text-5xl mb-8 leading-tight">අනාගතය දිනන දරුවන්ගේ නවාතැන</SinhalaText>
-          <button className="bg-blue-600 text-white px-12 py-4 rounded-sm font-bold text-lg hover:bg-blue-500 transition-all shadow-xl">
+      {/* CTA Section */}
+      <section className="py-24 bg-[#111111] border-t border-white/5 relative overflow-hidden text-center">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=2000')] bg-cover bg-center opacity-10"></div>
+        <div className="container mx-auto px-6 relative z-10 max-w-3xl">
+          <SinhalaText variant="h2" className="text-4xl md:text-5xl mb-8 leading-tight text-white drop-shadow-md">අනාගතය දිනන දරුවන්ගේ නවාතැන</SinhalaText>
+          <button className="bg-blue-600 text-white px-12 py-4 rounded-sm font-black uppercase tracking-widest text-sm shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] hover:-translate-y-1 transition-all duration-300">
             {language === 'si' ? 'අදම එක්වන්න' : 'Join Us Today'}
           </button>
         </div>

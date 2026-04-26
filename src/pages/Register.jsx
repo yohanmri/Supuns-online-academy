@@ -25,15 +25,15 @@ const Register = () => {
     <div className="min-h-screen bg-white flex flex-col md:flex-row">
       {/* Left side: Visuals */}
       <div className="hidden md:flex md:w-1/2 bg-navy relative items-center justify-center p-12 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=2000')] bg-cover bg-center opacity-20"></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/50 to-navy"></div>
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=2000')] bg-cover bg-center opacity-40"></div>
+        <div className="absolute inset-0 bg-[#111111]/60 backdrop-blur-[2px]"></div>
         
         <div className="relative z-10 max-w-md text-white">
-          <Link to="/" className="text-3xl font-black tracking-tighter mb-12 block">
-             <span className="bg-blue-600 px-3 py-1 rounded-sm mr-1 shadow-lg">S</span>
+          <Link to="/" className="text-3xl font-black tracking-tighter mb-12 block text-white">
+             <span className="bg-blue-600 px-3 py-1 rounded-sm mr-1 shadow-lg text-white">S</span>
              Supun's Academy
           </Link>
-          <SinhalaText variant="h1" className="text-5xl font-bold leading-tight mb-6">ඔබේ ජයග්‍රාහී ගමන අදම අරඹන්න</SinhalaText>
+          <SinhalaText variant="h1" className="text-5xl font-bold leading-tight mb-6 text-white drop-shadow-md">ඔබේ ජයග්‍රාහී ගමන අදම අරඹන්න</SinhalaText>
           <p className="text-blue-100 text-lg leading-relaxed opacity-80 mb-8">
             Join the leading online academy in Sri Lanka and gain access to expert tutors, comprehensive study materials, and interactive live sessions.
           </p>

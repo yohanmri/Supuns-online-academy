@@ -6,6 +6,8 @@ import teacher2Img from '../assets/images/teacher2.png';
 import teacher3Img from '../assets/images/teacher3.png';
 import teacher4Img from '../assets/images/teacher4.png';
 import { useLanguage } from '../context/LanguageContext';
+import { TeacherCard } from './Teachers';
+import { teachers } from '../data/teacherData';
 
 const slides = [
   {
@@ -21,7 +23,8 @@ const slides = [
     teacherScale: 'scale-108',
     teacherWidth: 'w-[48%] md:w-[55%] lg:w-[51%]',
     highlightClass: 'text-black drop-shadow-[0_1px_4px_rgba(255,255,255,0.4)]',
-    subtitleHighlight: 'bg-[#9e9fa2] text-white'
+    subtitleHighlight: 'bg-[#9e9fa2] text-white',
+    highlightStyle: { WebkitTextStroke: '1px rgba(255,255,255,0.5)' }
   },
   {
     id: 'maths',
@@ -146,11 +149,11 @@ const HeroCarousel = () => {
             </h1>
           </div>
 
-          <div className="flex gap-6 justify-start">
-            <button className="bg-white text-black px-12 py-4 rounded-sm font-bold text-base md:text-lg hover:bg-[#0079c1] hover:text-white transition-all duration-300 shadow-2xl">
+          <div className="flex gap-4 md:gap-6 justify-start">
+            <button className="bg-white text-black px-6 md:px-8 py-2.5 md:py-3 rounded-sm font-bold text-sm md:text-base hover:bg-[#0079c1] hover:text-white transition-all duration-300 shadow-2xl">
               {language === 'si' ? 'අදම එක්වන්න' : 'Get Started'}
             </button>
-            <button className="border-2 border-white/40 text-white px-12 py-4 rounded-sm font-bold text-base md:text-lg hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm">
+            <button className="border-2 border-white/40 text-white px-6 md:px-8 py-2.5 md:py-3 rounded-sm font-bold text-sm md:text-base hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-sm">
               {language === 'si' ? 'විස්තර බලන්න' : 'Watch Intro'}
             </button>
           </div>
@@ -183,13 +186,15 @@ const NoticeTicker = () => (
 );
 
 const Home = () => {
+  const { language } = useLanguage();
+
   return (
     <div className="min-h-screen bg-white">
       <HeroCarousel />
       <NoticeTicker />
 
       {/* Stats Section */}
-      <section className="py-24 bg-white relative z-30">
+      <section className="pt-16 pb-8 bg-white relative z-30">
         <div className="container mx-auto px-6 md:px-12 grid grid-cols-2 md:grid-cols-4 gap-16">
           {[
             { v: '5000+', l: 'Active Students' },
@@ -205,10 +210,64 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-28 bg-gray-50 border-t border-gray-100">
-        <div className="container mx-auto px-6 text-center max-w-3xl">
-          <SinhalaText variant="h2" className="text-4xl md:text-5xl mb-8 leading-tight">ඔබේ අනාගතය අදම සුරක්ෂිත කරගන්න</SinhalaText>
-          <button className="bg-[#0079c1] text-white px-14 py-5 rounded-sm font-bold text-lg shadow-[0_20px_50px_rgba(0,121,193,0.3)] hover:bg-blue-600 hover:-translate-y-1 transition-all duration-300">ලියාපදිංචි වන්න</button>
+      {/* Notice Section */}
+      <section className="pt-4 pb-12 bg-white relative z-30">
+        <div className="container mx-auto px-6 md:px-12">
+          <div className="flex flex-col md:flex-row gap-8 items-center bg-[#f8f9fa] p-8 md:p-12 rounded-sm border-l-4 border-l-orange-500 shadow-sm">
+            <div className="w-full md:w-2/3">
+              <span className="text-orange-500 font-black uppercase tracking-[0.3em] text-[10px] md:text-xs block mb-3 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
+                {language === 'si' ? 'විශේෂ නිවේදනය' : 'Special Notice'}
+              </span>
+              <SinhalaText variant="h2" className="text-2xl md:text-3xl font-bold text-navy mb-4 leading-tight">
+                {language === 'si' 
+                  ? '2026 සිද්ධාන්ත පන්ති සඳහා ලියාපදිංචිය දැන් ඇරඹුනා!'
+                  : 'Registrations for 2026 Theory Classes are now open!'}
+              </SinhalaText>
+              <p className="text-gray-500 leading-relaxed text-sm">
+                {language === 'si'
+                  ? 'සීමිත සිසුන් පිරිසක් පමණක් බඳවා ගන්නා බැවින් අදම ඔබගේ අසුන වෙන්කරවා ගන්න. වැඩි විස්තර සඳහා පහත බොත්තම ක්ලික් කරන්න.'
+                  : 'Since only a limited number of students are enrolled, reserve your seat today. Click the button below for more details.'}
+              </p>
+            </div>
+            <div className="w-full md:w-1/3 flex justify-start md:justify-end mt-4 md:mt-0">
+              <button className="bg-orange-500 text-white px-8 py-4 rounded-sm font-black uppercase tracking-widest text-xs shadow-[0_0_15px_rgba(249,115,22,0.3)] hover:shadow-[0_0_25px_rgba(249,115,22,0.6)] hover:bg-orange-600 hover:-translate-y-0.5 transition-all">
+                {language === 'si' ? 'වැඩි විස්තර' : 'More Info'}
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Teachers Section */}
+      <section className="pt-12 pb-16 bg-[#f8f9fa] relative z-30 border-t border-gray-100">
+        <div className="container mx-auto px-6 md:px-12">
+          <div className="text-center mb-16">
+            <span className="text-blue-600 font-black uppercase tracking-[0.3em] text-[10px] md:text-xs block mb-3">
+              {language === 'si' ? 'අපේ ප්‍රවීණයන්' : 'Our Experts'}
+            </span>
+            <SinhalaText variant="h2" className="text-3xl md:text-5xl font-bold text-navy mb-4">
+              {language === 'si' ? 'ප්‍රමුඛතම ගුරු මණ්ඩලය' : 'Featured Faculty'}
+            </SinhalaText>
+            <div className="h-1 w-16 bg-blue-600 mx-auto rounded-full"></div>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+            {teachers.slice(0, 5).map((teacher, idx) => (
+              <TeacherCard key={idx} {...teacher} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-16 bg-[#111111] border-t border-white/5 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=2000')] bg-cover bg-center opacity-10"></div>
+        <div className="container mx-auto px-6 text-center max-w-3xl relative z-10">
+          <SinhalaText variant="h2" className="text-4xl md:text-5xl mb-8 leading-tight text-white drop-shadow-md">ඔබේ අනාගතය අදම සුරක්ෂිත කරගන්න</SinhalaText>
+          <button className="bg-blue-600 text-white px-12 py-4 rounded-sm font-black uppercase tracking-widest text-sm shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] hover:-translate-y-1 transition-all duration-300">
+            {language === 'si' ? 'ලියාපදිංචි වන්න' : 'Register Now'}
+          </button>
         </div>
       </section>
     </div>

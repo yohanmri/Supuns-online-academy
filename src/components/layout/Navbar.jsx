@@ -11,6 +11,8 @@ const Navbar = () => {
     { path: '/teachers', si: 'ගුරු මණ්ඩලය', en: 'Teachers' },
     { path: '/schedule', si: 'කාලසටහන', en: 'Schedule' },
     { path: '/dashboard', si: 'පුවරුව', en: 'Dashboard' },
+    { path: '/about', si: 'අපි ගැන', en: 'About' },
+    { path: '/contact', si: 'සම්බන්ධ වන්න', en: 'Contact' },
   ];
 
   return (
@@ -45,9 +47,12 @@ const Navbar = () => {
           >
             {language === 'si' ? 'English' : 'සිංහල'}
           </button>
-          <button className="bg-[#0079c1] hover:bg-blue-500 text-white px-5 py-1.5 rounded-sm text-xs font-bold transition-all shadow-lg active:scale-95">
+          <Link 
+            to="/register"
+            className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-sm text-[11px] font-black uppercase tracking-widest transition-all shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] active:scale-95"
+          >
             {language === 'si' ? 'ලියාපදිංචි වන්න' : 'Register'}
-          </button>
+          </Link>
         </div>
       </div>
     </nav>
