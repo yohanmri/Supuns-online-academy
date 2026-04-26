@@ -9,6 +9,7 @@ import WhatsAppFAB from './components/ui/WhatsAppFAB';
 import Home from './pages/Home';
 import About from './pages/About';
 import Teachers from './pages/Teachers';
+import TeacherProfile from './pages/TeacherProfile';
 import Schedule from './pages/Schedule';
 import Dashboard from './pages/Dashboard';
 import Contact from './pages/Contact';
@@ -27,6 +28,7 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/teachers" element={<Teachers />} />
+                  <Route path="/teachers/:id" element={<TeacherProfile />} />
                   <Route path="/schedule" element={<Schedule />} />
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/contact" element={<Contact />} />

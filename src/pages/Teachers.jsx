@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import SinhalaText from '../components/typography/SinhalaText';
 import { useLanguage } from '../context/LanguageContext';
-import supunImg from '../assets/images/supun-hero.png';
-import teacher1Img from '../assets/images/teacher1.png';
-import teacher2Img from '../assets/images/teacher2.png';
-import teacher3Img from '../assets/images/teacher3.png';
-import teacher4Img from '../assets/images/teacher4.png';
-import teacher5Img from '../assets/images/teacher5.png';
-import teacher6Img from '../assets/images/teacher6.png';
-import teacher7Img from '../assets/images/teacher7.png';
+import { teachers } from '../data/teacherData';
 
 // Inline Icon Components
 const ChevronDown = () => (
@@ -23,26 +17,28 @@ const CheckIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
 );
 
-const TeacherCard = ({ name, credentials, image, grades, subjects, color, hoverColor }) => {
+const TeacherCard = ({ id, name, credentials, image, grades, subjects, color, hoverColor }) => {
   const { language } = useLanguage();
   return (
-    <div className="bg-white border border-gray-100 group overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col h-full relative max-w-[210px] mx-auto shadow-sm">
-      <div className={`py-1.5 px-2 flex justify-center items-center ${color}`}>
-        <div className="text-[13px] font-black uppercase tracking-wider text-white font-sinhala-head">
-          {subjects[0]}
+    <Link to={`/teachers/${id}`} className="block">
+      <div className="bg-white border border-gray-100 group overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col h-full relative max-w-[210px] mx-auto shadow-sm">
+        <div className={`py-1.5 px-2 flex justify-center items-center ${color}`}>
+          <div className="text-[13px] font-black uppercase tracking-wider text-white font-sinhala-head">
+            {subjects[0]}
+          </div>
+        </div>
+        <div className="relative aspect-[4/5] bg-gray-100 overflow-hidden">
+          <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"/>
+          <div className="absolute top-2 left-2 bg-white/90 backdrop-blur-md px-2 py-0.5 rounded-sm shadow-sm">
+            <span className="text-[8px] font-bold uppercase tracking-wider text-gray-800">{grades}</span>
+          </div>
+        </div>
+        <div className="p-2.5 flex flex-col flex-grow text-center">
+          <SinhalaText variant="h3" className={`text-[16px] font-bold text-gray-900 ${hoverColor} transition-colors leading-tight mb-0.5`}>{name}</SinhalaText>
+          <p className="text-[10px] text-gray-600 font-bold leading-tight mt-0 line-clamp-2">{credentials}</p>
         </div>
       </div>
-      <div className="relative aspect-[4/5] bg-gray-100 overflow-hidden">
-        <img src={image} alt={name} className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"/>
-        <div className="absolute top-2 left-2 bg-white/90 backdrop-blur-md px-2 py-0.5 rounded-sm shadow-sm">
-          <span className="text-[8px] font-bold uppercase tracking-wider text-gray-800">{grades}</span>
-        </div>
-      </div>
-      <div className="p-2.5 flex flex-col flex-grow text-center">
-        <SinhalaText variant="h3" className={`text-[16px] font-bold text-gray-900 ${hoverColor} transition-colors leading-tight mb-0.5`}>{name}</SinhalaText>
-        <p className="text-[10px] text-gray-600 font-bold leading-tight mt-0 line-clamp-2">{credentials}</p>
-      </div>
-    </div>
+    </Link>
   );
 };
 
@@ -80,17 +76,6 @@ const Teachers = () => {
   const toggleSubject = (subject) => {
     setSelectedSubjects(prev => prev.includes(subject) ? prev.filter(s => s !== subject) : [...prev, subject]);
   };
-
-  const teachers = [
-    { id: 'science', name: 'සුපුන් රත්නායක', credentials: 'BSc (Hons) in Biological Science, Senior Science Consultant', image: supunImg, grade_category: '10-11', grades: 'GRADE 10 - 11', subjects: ['විද්‍යාව'], color: 'bg-blue-600', hoverColor: 'group-hover:text-blue-600' },
-    { id: 'maths', name: 'නිල්මිණි පෙරේරා', credentials: 'BSc in Physical Science (University of Peradeniya)', image: teacher1Img, grade_category: '10-11', grades: 'GRADE 10 - 11', subjects: ['ගණිතය'], color: 'bg-[#10b981]', hoverColor: 'group-hover:text-[#10b981]' },
-    { id: 'english', name: 'නිමල් සිරිවර්ධන', credentials: 'MA in English Literature, Senior English Lecturer', image: teacher2Img, grade_category: 'all', grades: 'ALL GRADES', subjects: ['ඉංග්‍රීසි'], color: 'bg-[#f6921e]', hoverColor: 'group-hover:text-[#f6921e]' },
-    { id: 'sinhala', name: 'ප්‍රසාදිනී මධුසංඛ', credentials: 'BA in Sinhala (University of Kelaniya), Media Consultant', image: teacher3Img, grade_category: 'all', grades: 'ALL GRADES', subjects: ['සිංහල'], color: 'bg-[#FFD700]', hoverColor: 'group-hover:text-[#FFD700]' },
-    { id: 'commerce', name: 'ප්‍රසාද් කුමාර', credentials: 'BCom (Special), Chartered Accountant (Finalist)', image: teacher4Img, grade_category: '10-11', grades: 'GRADE 10 - 11', subjects: ['වාණිජ්‍යය'], color: 'bg-[#1b5e20]', hoverColor: 'group-hover:text-[#1b5e20]' },
-    { id: 'history', name: 'දමිත් ලියනගේ', credentials: 'BA in Archeology (Special), University of Peradeniya', image: teacher5Img, grade_category: '10-11', grades: 'GRADE 10 - 11', subjects: ['ඉතිහාසය'], color: 'bg-slate-700', hoverColor: 'group-hover:text-slate-700' },
-    { id: 'english-lit', name: 'ඉමේෂා පෙරේරා', credentials: 'MA in Linguistics, BA in English Lit (University of Kelaniya)', image: teacher6Img, grade_category: 'all', grades: 'ALL GRADES', subjects: ['සාහිත්‍යය'], color: 'bg-purple-900', hoverColor: 'group-hover:text-purple-900' },
-    { id: 'tamil', name: 'සෙල්වරාජ් කුමාර්', credentials: 'BA in Tamil Language & Culture (Eastern University)', image: teacher7Img, grade_category: 'all', grades: 'ALL GRADES', subjects: ['දෙමළ'], color: 'bg-red-900', hoverColor: 'group-hover:text-red-900' }
-  ];
 
   const filteredTeachers = teachers.filter(t => {
     const matchSubject = selectedSubjects.length === 0 || selectedSubjects.includes(t.id);
@@ -151,7 +136,7 @@ const Teachers = () => {
               </div>
             </aside>
 
-            {/* Middle Content */}
+            {/* Middle Content - Teacher Grid */}
             <div className="flex-grow">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {filteredTeachers.map((teacher, idx) => (
@@ -200,7 +185,6 @@ const Teachers = () => {
                   ))}
                 </AccordionGroup>
 
-                {/* A/L Stream Division */}
                 <div className="mt-4 border-t border-gray-100 pt-2">
                   <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block mb-2">{language === 'si' ? 'උසස් පෙළ අංශ' : 'A/L STREAMS'}</span>
                   
